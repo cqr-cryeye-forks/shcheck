@@ -133,7 +133,8 @@ def main():
         headers.clear()
 
     OUTPUT_JSON = MAIN_DIR / args.output
-
+    if not results:
+        results = {"message": "Nothing to show by shcheck (maybe Connection Error)"}
     with OUTPUT_JSON.open('w') as jf:
         json.dump(results, jf, indent=2)
 
