@@ -1,5 +1,4 @@
-import sys
-import urllib.error as urlerror
+# main_app/func_2.py
 import urllib.request as urlreq
 
 from main_app.colors import colorize
@@ -8,15 +7,9 @@ from main_app.func_1 import normalize, set_proxy, get_unsafe_context
 
 
 def check_target(target, options):
-    """
-    Just put a protocol to a valid IP and check if connection works,
-    returning HEAD response
-    """
-    # Recover used options
     ssldisabled = options.ssldisabled
     useget = options.useget
     proxy = options.proxy
-    response = None
 
     target = normalize(target)
 
@@ -44,14 +37,10 @@ def check_target(target, options):
         else:
             response = urlreq.urlopen(request, timeout=10)
 
-    except Exception as e:
-        print("[!] Unexpected error:", e)
-        sys.exit(1)
-
-    if response:
         return response
-    print("Couldn't read a response from server.")
-    sys.exit(3)
+
+    except Exception:
+        return None
 
 
 def is_https(target):

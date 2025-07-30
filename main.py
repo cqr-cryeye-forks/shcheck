@@ -40,6 +40,15 @@ def main():
             target = append_port(target, args.port)
 
         response = check_target(target, args)
+
+        if response is None:
+            results.append({
+                "target": target,
+                "error": "Connection Error"
+            })
+            headers.clear()
+            continue
+
         rUrl = response.geturl()
 
         print(f"[*] Analyzing headers of {colorize(target, 'info')}")
@@ -133,8 +142,9 @@ def main():
         headers.clear()
 
     OUTPUT_JSON = MAIN_DIR / args.output
+
     if not results:
-        results = {"message": "Nothing to show by shcheck (maybe Connection Error)"}
+        results = {"message": "Nothing to show by shcheck"}
     with OUTPUT_JSON.open('w') as jf:
         json.dump(results, jf, indent=2)
 
