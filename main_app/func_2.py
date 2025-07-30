@@ -7,21 +7,6 @@ from main_app.constants import client_headers
 from main_app.func_1 import normalize, set_proxy, get_unsafe_context
 
 
-def print_error(e):
-    if isinstance(e, ValueError):
-        print("Unknown url type")
-
-    if isinstance(e, urlerror.HTTPError):
-        print(f"[!] URL Returned an HTTP error: {colorize(str(e.code), 'error')}")
-
-    if isinstance(e, urlerror.URLError):
-        if "CERTIFICATE_VERIFY_FAILED" in str(e.reason):
-            print("SSL: Certificate validation error.\nIf you want to \
-    ignore it run the program with the \"-d\" option.")
-        else:
-            print("Target host seems to be unreachable")
-
-
 def check_target(target, options):
     """
     Just put a protocol to a valid IP and check if connection works,
@@ -36,15 +21,16 @@ def check_target(target, options):
     target = normalize(target)
 
     try:
-        # OLD
         # =====================================================================
+        # OLD
+        # ---------------------------------------------------------------------
         # request = urlreq.Request(target, headers=client_headers)
         # method = 'GET' if useget else 'HEAD' # Set method
         # request.get_method = lambda: method
-        # =====================================================================
+        # ---------------------------------------------------------------------
 
         # NEW
-        # =====================================================================
+        # ---------------------------------------------------------------------
         method = 'GET' if useget else 'HEAD'  # Set method
         request = urlreq.Request(target, headers=client_headers, method=method)
         # =====================================================================
@@ -59,10 +45,10 @@ def check_target(target, options):
             response = urlreq.urlopen(request, timeout=10)
 
     except Exception as e:
-        print_error(e)
+        print("[!] Unexpected error:", e)
         sys.exit(1)
 
-    if response is not None:
+    if response:
         return response
     print("Couldn't read a response from server.")
     sys.exit(3)

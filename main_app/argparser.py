@@ -11,6 +11,10 @@ def arg_parser():
         "--target",
         help="One or more target URLs to scan (e.g., https://example.com)"
     )
+    parser.add_argument(
+        "--output",
+        help="JSON output file path (e.g., example.json)",
+    )
 
     parser.add_argument(
         "--port", metavar="PORT",

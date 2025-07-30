@@ -1,9 +1,8 @@
 import socket
 import ssl
+import urllib.request as urlreq
 
 from main_app.constants import headers
-import urllib.request as urlreq
-import urllib.error as urlerror
 
 
 def parse_headers(hdrs):
@@ -20,7 +19,7 @@ def set_proxy(proxy):
     if proxy is None:
         return
     proxyhnd = urlreq.ProxyHandler({
-        'http':  proxy,
+        'http': proxy,
         'https': proxy
     })
     opener = urlreq.build_opener(proxyhnd)

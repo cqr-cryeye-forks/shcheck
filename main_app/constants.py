@@ -1,3 +1,6 @@
+import pathlib
+from typing import Final
+
 client_headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0)\
  Gecko/20100101 Firefox/53.0',
@@ -35,3 +38,5 @@ cache_headers = {
 }
 
 headers = {}
+
+MAIN_DIR: Final[pathlib.Path] = pathlib.Path(__file__).parents[1]
